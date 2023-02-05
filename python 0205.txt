@@ -1,0 +1,268 @@
+논리연산자
+모든 조건을 만족하거나 여러 조건 중 하나만 만족해도되거나 특정코드를 실행하고 싶을 때 사용
+Falsy: False는 아니지만 False로 취급되는 다양한 값
+< 0 0.0 () [] {} None ""(빈문자열) >
+논리 연산자도 우선순위 존재 (not->and->or)
+print((not true) and false) or (not false))의 형태로 작성
+
+리스트는 []나 list()를 통해 생성
+가변자료로써 생성된 이후에 내용 변경이 가능함 인덱스를 통해 접근 가능
+
+튜플은 값을 순서가 있는 구조로 저장할 떄 사용
+담고있는 값을 변경할 수 없다
+
+
+
+형변환
+데이터 형태는 서로 변환 할 수 있다.
+암시적 변환: 사용자가 의도하지 않고 파이썬 내부적으로 자료형을 변환하는 경우
+-bool
+-Numeric type(int, float)
+
+명시wjr 변환: 사용자가 특정함수를 이용하여 의도적으로 자료를 변환하는 경우
+-int: str,float->int로 변경 가능(형식에 맞는 문자열만 정수로 변환가능)
+
+제어문
+순차, 선택, 반복 위에서 아래로 명령 수행
+특정상황에 따라 코드를 선택적으로 실행하거나 계속하여 실행하는 제어가 필요함 (순서도로 표현 가능)
+
+
+조건표현식(=삼항 연산자)*****
+일반적으로 조건에 따라 값을 정할 때 활용
+true인 경우 값 if 조건 else false인 경우 값
+value = num | if num >= 0 | else -num
+ 참인 경우 	조건	 거짓인 경우
+=>절댓값을 저장하기 위한 코드
+=> 만약 num이 0보다 크거나 같으면 num출력 아니면 -num 출력
+
+딕셔너리
+grades={'john':80,'eric':90}
+print(grades.keys())
+==dict_keys{['john' , 'eric']}
+print(grades.values())
+==dict_keys{[80 , 90]}
+print(grades.items())
+==dict_keys{[('john',80) , ('eric',90)]}
+
+for student, grade in grades.items():
+print(student, grade)
+john 80
+eric 90
+
+for student in grades:
+print(student, grade[student])
+john 80
+eric 90
+
+
+<enumerate>-인덱스와 객체를 쌍으로 담은 열거형 객체 반환
+(index, value)형태의 tuple로 구성된 열거 객체를 반환
+members=['민수','영희','철수']
+for idx, number in enumerate(members):
+print(idx,number)
+0 민수
+1 영희
+2 철수
+
+print(list(enumerate(members)))	[(0,'민수'),(1,'영희'),(2,'철수')]
+print(list(enumerate(members, start=1)))	[(1,'민수'),(2,'영희'),(3,'철수')]
+start를 지정하면 해당 값부터 순차적으로 증가
+
+리스트 컴프리헨션
+[ code for 변수 in iterable ]
+[ code for 변수 in iterable if 조건식 ]
+cubic_list=[]
+for number in range(1,4):
+cubic_list.append(number**3))
+print(cubic_list)
+
+cubic_list = [number**3 for number in range(1,4)]
+print(cubic_list)
+
+딕셔너리 컴프리헨션
+{ key:value for 변수 in iterable }
+{ key:value for 변수 in iterable if 조건식 }
+cubic_dict={}
+for number in range(1,4):
+cubic_dict[number]=number**3
+print(cubic_dict)
+
+cubic_dict = {number:number**3 for number in range(1,4)}
+print(cubic_dict)
+
+global: 선언된 적 없는 변수 활용 가능
+nonlocal: 선언된 적 없는 변수 활용 불가
+
+filter: 순회 가능한 데이터구조의 모든 요소에 함수적용하고 결과가 True인 것을 object로 반환
+
+zip: 복수의 iterable을 모아 튜플을 원소로 하는 zip object를 반환
+girls=['jane' , 'ashley']
+boys=['justin' , 'eric']
+pair=zip(girls,boys)
+print(list(pair))	#[('jane' , 'justin'),('ashley' , 'eric')]
+
+lambda: 표현식을 계산한 결괏값을 반환하는 함수, 익명함수로도 불림
+return문을 가질수 없고 감편조건문 외에 조건문이나 반복문을 가질 수 없음
+#삼각형의 넓이를 구하는 공식-def
+def triangle(b,h):
+return 0.5*b*h
+print(triangle(5,6))	#15
+
+#삼각형의 넓이를 구하는 공식-lambda
+triangle=lambda b, h : 0.5 * b * h
+print(triangle(5,6))	#15
+
+재귀함수: 자기 자신을 호출하는 함수
+1개 이상의 base case(종료되는 상황)가 존재하고 수렴하도록 작성
+예시: 팩토리얼(n!)
+f(4) = 4 * f(3)
+f(3) = 3 * f(2)
+f(2) = 2 * f(1)
+f(1) = 1
+<팩토리얼을 코드로 구현-재귀함수>
+def factorial(n):
+if n==0 or n==1:
+return 1
+else:
+return n * factorial(n-1)
+print(factorial(4))
+재귀함수는 base case에 도달할 때까지 함수를 호출함
+메모리 스택이 넘치게 되면 프로그램이 동작하지 않게 됨
+파이썬에서 최대 재귀 깊이가 1000번으로 호출횟수가 이를 넘어가게 되면 recursion error발생
+<팩토리얼을 코드로 구현-반복문>
+def fact(n):
+result = 1
+while n > 1:
+result *= n 
+n-=1
+return result
+print(fact(4))
+재귀호출은 변수 사용을 줄여준다.
+재귀호출은 입력값이 커질수록 연산속도가 오래걸린다.
+
+가변인자: 여러개의 positional argument를 하나의 필수 parameter로 받아서 사용
+몇개의 positional argument를 받을지 모르는 함수를 정의할 떄 유용
+def add(*arg):		add(2)
+for arg in args:		add(2,3,4,5)
+print(arg)
+<키워드 인자>
+def family(**kwargs):
+for key, value in kwargs.items():
+print(key, ":", value)
+family(father='아부지',mother='어무니',baby='아기')
+father : 아부지
+mother : 어무니
+baby : 아기
+<가변인자&키워드인자>
+def print_family_name(*parents,**pets):
+print('아버지 :', parents[0])
+print('어머니 :', parents[1])
+if pets:
+print('반려동물들..')
+for title, name in pets.items():
+print('{} : {}'.format(title, name))
+print_family_name('아부지', '어무니', dog='멍멍이', cat='냥냥이')
+아버지 : 아부지
+어머니 : 어무이
+반려동물들..
+dog : 멍멍이
+cat : 냥냥이
+
+데이터 구조를 활용하기 위해서 메서드를 사용한다.
+메서드는 클래스 내부에 정의한 함수로 사실상 함수와 동일하다
+
+set: 중복되는 요소없이 순서에 상관없는 데이터들의 묶음
+인덱스로의 접근불가, 가변자료
+
+할당*****
+대입연산자(=): 해당객체에 대한 객체 참조를 복사, 이를 참조하는 모든 변수에 영향(같은 주소)
+얕은 복사
+slice연산자를 이용하여 같은 원소를 가진 리스트지만 연산된 결과를 복사(다른주소)
+깊은 복사
+
+절차지향: 순서가 정해있어 실행이 빠르다
+그러나 생산성이 너무 낮다. 절차대신 핵심이 되는 데이터를 중심으로 생각하자
+객체지향(OOP)
+데이터를 중심으로 절차를 도입해서 현실의 사물을 나타내고 조립하는 방식으로 개발
+프로그램을 여러개의 독립된 객체들과 그 객체 간의 상호작용으로 파악하는 프로그래밍 방법
+장점: 객체는 잘만들어놓으면 계속 재사용이 가능함
+객체는 그 자체로 데이터와 행동이 정의됨: 개발자가 내부구조를 몰라도 다른객체와 조립하면서 개발 가능
+많은 인원이 참여하는 대규모 소프트웨어 개발 가능.
+개발이 용이하고 유지보수가 편리하고 신뢰성을 바탕으로 생산성이 증가한다.
+단점: 설계시 많은 노력과 시간이 필요하고 실행속도가 다소 느림
+
+객체: 클래스에 정의한 것을 토대로 메모리에 할당된 것으로 프로그램에서 사용되는 데이터 또는 식별자에 의해 참조되는
+공간을 의미하며 변수, 자료구조, 함수, 메서드가 될 수 있다.
+클래스로 만든 객체를 인스턴스라고도 함 (클래스를 만드는것==타입을 만드는 것)
+파이썬은 모든 것이 객체다 (하나의 객체는 특정 타입의 인스턴스다)
+객체= 속성(attribute) + 기능(method)
+
+'==' : 두 객체가 내용이 같은 경우 True, 실제로 동일한 대상을 가리키고 있다는 것은 아님
+'is' : 두 변수가 동일한 객체를 가리키는 경우 True
+
+속성: 특정 데이터 타입/클래스의 객체들이 가지게 될 상태/데이터를 의미
+클래스 변수와 인스턴스 변수 존재
+
+class Person:
+blood_color = 'red'	#클래스 변수
+population = 100		#클래스 변수
+
+def __init__(self, name):	
+self.name=name		#인스턴스 변수
+
+person1 = Person('지민')
+print(person1.name)	#지민
+
+인스턴스 변수:
+인스턴스가 개인적으로 가지고 있는 속성, 각 인스턴스들의 고유한 변수
+생성자 메서드 (__init__)에서 self.<name>으로 정의
+인스턴스가 생성된 이후 <instance>.<name>으로 접근 및 할당
+
+클래스 변수:
+한 클래스의 모든 인스턴스가 공유하는 값을 의미
+같은 클래스의 인스턴스들은 같은 값을 갖게 됨
+
+인스턴스 메서드
+인스턴스 변수를 사용하거나 인스턴스 변수에 값을 설정하는 메서드
+클래스 내부에 정의되는 메서드의 기본
+호출시, 첫번째 인자로 인스턴스 자기자신이 자동으로 전달됨
+
+매직 메서드
+특정 상황에 자동으로 불리는 메서드, 객체의 특수 조작행위를 지정
+ex)  __str__: 객체를 문자열로 표현하면 어떻게 표현할지를 지정
+
+클래스 메서드
+클래스가 사용할 메서드
+@classmethod 데코레이터를 사용하여 정의 (cls사용)
+호출시 첫번쨰 인자로 클래스가 전달됨
+
+클래스 메서드는 인스턴스 변수 사용이 불가능하다.
+하지만 인스턴스 메서드는 클래스 변수, 인스턴스 변수 둘 다 사용이 가능
+
+스태틱 메서드 
+인스턴스 변수, 클래스 변수를 전혀 사용하지 않는 메서드 (객체의 상태난 클래스 상태 수정불가)
+속성을 다루지 않고 단지 기능(행동)만을 하는 메서드를 정의할 떄 사용
+
+클래스는 상속이 가능
+두 클래스 사이 부모-자식 관계를 정립하는 것
+하위클래스는 상위클래스에 정의된 속성, 행동, 관계 및 제약 조건을 모두 상속 받음
+부모클래스의 속성, 메서드가 자식 클래스에 상속되므로 코드 재사용성이 높아진다.
+메서드 오버라이딩을 통해 자식클래스에서 재정의 가능하다
+부모클래스의 메서드 이름과 기본기능은 그대로 사용하지만 특정기능을 바꾸고 싶을 때 사용
+상속관계에서 이름공간은 인스턴스, 자식클래스, 부모클래스 순으로 탐색한다.
+
+super()
+자식클래스에서 부모클래스를 사용하고 싶은 경우
+
+mro 메서드
+해당 인스턴스의 클래스가 어떤 부모 클래스를 가지는지 확인하는 메서드
+
+다형성
+동일한 메서드가 클래스에 따라 다르게 행동할 수 있음을 의미한다.
+서로 다른 클래스에 속해 있는 객체들이 동일한 메시제에 대해 다른 방식으로 응답할 수 있음
+
+getter 메서드 (@property 데코레이터 사용)
+변수의 값을 읽는 메서드
+
+setter 메서드 (@setter 사용)
+변수의 값을 설정하는 성격의 메서드
