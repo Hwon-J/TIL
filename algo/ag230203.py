@@ -65,11 +65,19 @@ for test_case in range(1, T + 1):
             if lst[j]>= maxx:
                 maxx=lst[j]
                 mxidx=j
-            elif lst[j]<=minn:
+            if lst[j]<=minn:
                 minn=lst[j]
                 mnidx=j
         
         lst[mxidx]-=1
         lst[mnidx]+=1
-    
-    print(f'{test_case} {lst[mxidx]-lst[mnidx]}')
+    mx=0
+    mn=100
+    for k in range(len(lst)):     
+        if lst[k]>= maxx:
+            mx=lst[k]
+                
+        if lst[k]<=minn:
+            mn=lst[k]
+                
+    print(f'{test_case} {mx-mn}')
