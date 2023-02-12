@@ -1,3 +1,6 @@
+# # 파이썬 알고리즘 배열1,2
+#
+#
 # # 버블정렬
 # '''
 # 인접한 두 개의 원소를 비교하며 자리를 계속 교환하는 방식
@@ -7,7 +10,7 @@
 # '''
 # #55 7 78 12 42
 # lst=[55, 7, 78, 12, 42]
-# # 버블정렬시 리스트의 개수보다1개 적게 검사함
+# # 버블정렬시 리스트의 개수보다 1개 적게 검사함
 # # 마지막은 검사할 필요가 없기 떄문
 # for i in range(len(lst)-1):
 #     # 처음에는 4번, 다음에는 3번 이렇게 검사가 줄어듬
@@ -20,6 +23,20 @@
 # print(lst)
 # # [7, 12, 42, 55, 78]
 #
+#
+#
+# # insert sort 삽입정렬
+# a=[4,7,1,3,5,2]
+# # 정렬된 값을 넣을 빈리스트 만들기
+# result=[]
+# for i in range(len(a)):
+#     result.append(a[i]) # 값 하나씩 새 리스트에 추가하면서 동시에 정렬
+#     for j in range(i,0,-1): # 뒤에서 부터.. 앞으로 가면서
+#         if result[j-1]>result[j]: # 현재 vs 앞의값 비교
+#             result[j],result[j-1]=result[j-1],result[j]
+#         else:
+#             break
+# print(result)
 #
 #
 # # 카운팅 정렬
@@ -586,33 +603,200 @@
 # yaxis=bs1(0,5)
 # xaxis=bs2(0,9,yaxis)
 # print(yaxis,xaxis)
+#
+#
+#
+#
+# # 선택정렬
+# '''
+# 주어진 자료들 중 가장 작은 값의 원소부터 차례대로 선택하여 위치를 교환하는 방식
+# 주어진 리스트 중 최소값을 찾는다.
+# 그 값을 리스트의 맨앞에 위치한 값과 교환한다.
+# 맨처음 위치를 제외한 나머지 리스트를 대상으로 위의 과정을 반복한다.
+# 시간 복잡도 : O(n**2)
+# '''
+#
+# # 선택정렬 공식
+# n= 7        # 입력 받을 숫자 개수
+# arr= [7,2,5,3,4,6,4]
+# # 0~6까지 i의 범위임 # 마지막까지 비교할 필요 없음
+# for i in range(n-1):
+#     minIdx = i          #맨앞이 최소라 가정
+#     # 1~7까지 비교하기
+#     for j in range(i+1, n):
+#         #arr[0~6] 과 arr[1~7]을 비교했을 때
+#         # arr[minIdx]가 arr[j]보다 크면 바로 minIdx를 j값으로 변경
+#         # 작다면 그대로 pass
+#         # 만약에 여러번 돌더라도 arr[minIdx]가 가장 큰수라면 바뀌지 않음
+#         # arr[minIdx]는 남은 리스트 중 가장 작은 것
+#         if arr[minIdx] > arr [j]:
+#             minIdx = j
+#     # for문이 다돌고 난 후 자리바꿈
+#     #비교 기준인 arr[i]와 남은 비교대상 중 가장 작은 것을 바꿈
+#     arr[minIdx], arr[i] = arr[i], arr[minIdx]
+# print(arr)
+#
+#
+# # 문제1.
+# # 연속되는 숫자 3개의 합이 가장 클 때 의 값을 출력해 주세요
+# lst= [[4, 5, 2, 6, 7, 3, 1],
+#       [2, 9, 9, 6, 1, 6, 7]]
+# Max=-21e8
+# def getsum(a,b):
+#     sum=0
+#     for i in range(3):  # 3개 합이므로 for문 3번
+#         # 2차원 리스트이므로 [a]는 세로값 [b+i]가로값
+#         sum+=lst[a][b+i]  # 전달받은 좌표값부터 3곳의 합을 구한 후
+#     return sum  # 구한 합을 반환하기
+#
+# for i in range(2): # 2차원 리스트가 2줄이므로 for문 2번
+#     for j in range(5):    # 리스트를 3개묶음으로 볼 때 5개가 됨
+#         ret=getsum(i,j)    # getsum 함수에 좌표값 전달 (0,0~1,4)
+#         if ret>Max:     # 반환 되는 값 중 max값 갱신하기
+#             Max=ret
+# print(Max)
+#
+#
+# # 문제2.
+# # 리스트에 숫자 4개 입력을 받은 후
+# # 입력받은 숫자라 lst 안에 존재하면 Y를
+# # lst 안에 존재하지 않으면 N을 출력해 주세요
+#
+# # 5 3
+# # 8 2 입력시
+# # Y N
+# # N Y 출력
+# #
+# # 1 2
+# # 3 4 입력시
+# # Y Y
+# # N Y 출력
+#
+# lst= [[4, 5, 2, 6, 7],
+#       [2, 9, 9, 6, 1],
+#       [2, 9, 9, 6, 1]]
+# # 비교할 값 입력받기
+# # arr=[list(map(int,input().split())) for _ in range(2)]
+# arr=[[5,3],[8,2]]
+#
+# def findnum(value):
+#     for i in range(3):
+#         for j in range(5):
+#             if lst[i][j]==value:
+#                 return 1
+#     return 0
+# # 찾아야하는 숫자의 크기만큼 for문 탐색
+# # 똑같이 생긴 패턴 찾기X, 숫자 유무 확인
+# # arr을 찾아야하므로 arr[i][j]가 있는지 확인
+# for i in range(2):
+#     for j in range(2):
+#         ret=findnum(arr[i][j])
+#         if ret:
+#             print('Y',end=' ')
+#         else:
+#             print('N',end=' ')
+#     print()
+#
+#
+#
+# # 문제3.
+# # 정수 4개 입력받고
+# # 패턴 존재 여부 출력하기
+# #
+# # 1 1 2 1
+# # 없음
+# #
+# # 5 8 5 3
+# # 존재함
+# arr=[3,6,5,8,5,3,5,8,5,3,3,1,1,3]
+# # pattern=list(map(int,input().split()))
+# pattern=[1,1,2,1]
+# alen=len(arr) # 14개
+# def isPattern(index): # 0 1 2 ... 10
+#     #검사할 패턴 4개
+#     for i in range(4):
+#         if arr[index+i]!=pattern[i]:    # 비교대상 다르면 0 리턴
+#             return 0
+#     return 1
+#
+# flag=0
+# # 패턴의 길이가 4이므로 arr총길이 14-10+1
+# for i in range(alen-4+1):
+#     ret=isPattern(i)
+#     if ret:
+#         flag=1
+#         break
+# if flag:
+#     print("존재")
+# else:
+#     print('없음')
+#
+#
+# # 문제4.
+# '''
+# 이차원 배열에 패턴이 몇개 존재 하는지 출력하기
+# AB
+# TT
+# 발견2개
+# TA
+# CC
+# 미발견
+# AB
+# TA
+# 미발견
+# '''
+# board = [
+#     ['A','B','G','K'],
+#     ['T','T','A','B'],
+#     ['A','C','T','T']]
+# # 패턴 입력받기
+# # ptn=[list(input()) for _ in range(2)]
+# ptn=[['A','B'],['T','T']]
+# def findptn(by,bx):
+#     # 패턴 크기만큼 for문 실행
+#     for dy in range(2):
+#         for dx in range(2):
+#             # y는 y끼리 x는 x끼리 더하고 패턴과 다르면 0 반환
+#             if board[by+dy][bx+dx]!=ptn[dy][dx]:
+#                 return 0
+#     return 1
+#
+# cnt=0
+# # 3X4 배열을 2X2 배열로 묶으면 2X3
+# for i in range(2):
+#     for j in range(3):
+#         if findptn(i,j):
+#             # 리턴값 1이면 cnt에 1더함
+#             cnt+=1
+# if cnt:   # if cnt!=0:
+#     print(f'발견 {cnt}개')
+# else:
+#     print("미발견")
+#
+#
+# # 문제5.
+# # 이 모양으로 땅을 갖을 수 있다고 할때 어느 땅을 갖어야 할까요?
+# # 2*3 배열만큼 잘라서 합을 구할떄 최대값은 몇 일까요? !!
+#
+# arr=[[1, 5, 4, 2],
+#     [1, 3, 4, 2],
+#     [3, 5, 3, 2],
+#     [2, 6, 4, 1]]
+#
+# def getsum(a,b):
+#     sum=0
+#     for i in range(2):
+#         for j in range(3):
+#             sum+=arr[a+i][b+j]
+#     return sum
+#
+# maxv=-21e8
+# # 2x3으로 자르면 3x2가 됨
+# for i in range(3):
+#     for j in range(2):
+#         ret=getsum(i,j)
+#         if ret>maxv:
+#             #최대 리턴값 구하기
+#             maxv=ret
+# print(maxv)
 
-
-
-
-# 선택정렬
-'''
-주어진 자료들 중 가장 작은 값의 원소부터 차례대로 선택하여 위치를 교환하는 방식
-주어진 리스트 중 최소값을 찾는다.
-그 값을 리스트의 맨앞에 위치한 값과 교환한다.
-맨처음 위치를 제외한 나머지 리스트를 대상으로 위의 과정을 반복한다.
-시간 복잡도 : O(n**2)
-'''
-
-# 선택정렬 공식
-n= 7        # 입력 받을 숫자 개수
-arr= [7,2,5,3,4,6,4]
-# 0~6까지 i의 범위임 # 마지막까지 비교할 필요 없음
-for i in range(n-1):
-    minIdx = i          #맨앞이 최소라 가정
-    # 1~7까지 비교하기
-    for j in range(i+1, n):
-        #arr[0~6] 과 arr[1~7]을 비교했을 때
-        # arr[minIdx]가 arr[j]보다 크면 바로 minIdx를 j값으로 변경
-        # 만약에 여러번 돌더라도 arr[minIdx]가 가장 큰수라면 바뀌지 않음
-        if arr[minIdx] > arr [j]:
-            #
-            minIdx = j
-    # for문이 다돌고 난 후 자리바꿈
-    arr[minIdx], arr[i] = arr[i], arr[minIdx]
-print(arr)
