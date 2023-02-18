@@ -192,34 +192,34 @@ end DFS()
 BFS(너비우선탐색)
 -큐를 이용하는 탐색
 '''
-
-# DFS
-# 7 8
-# 1 2 1 3 2 4 2 5 4 6 5 6 6 7 3 7
-# 인접행렬, 인접리스트
-# V: 인접행렬을 만들 갯수(1-7) E:연결된 길이 개수
-V,E=map(int, input().split())
-# 연결된 길이 관계 입력받기
-arr=list(map(int, input().split()))
-# 인접행렬 만들 빈리스트 만들기 (V+1)개: 0번 인덱스는 사용X
-adjM=[[0]*(V+1) for _ in range(V+1)]
-
-# adjL=[[]for _ in range(V+1)]
-# 연결된 길이 개수(E)만큼 for문 실행
-for i in range(E):
-
-    v1,v2=arr[i*2],arr[i*2+1]
-    adjM[v1][v2]=1
-    adjM[v2][v1]=1
-    # adjL[v1].append(v2)
-    # adjL[v2].append(v1)
-print(adjM)
+#
+# # DFS
+# # 7 8
+# # 1 2 1 3 2 4 2 5 4 6 5 6 6 7 3 7
+# # 인접행렬, 인접리스트
+# # V: 인접행렬을 만들 갯수(1-7) E:연결된 길이 개수
+# V,E=map(int, input().split())
+# # 연결된 길이 관계 입력받기
+# arr=list(map(int, input().split()))
+# # 인접행렬 만들 빈리스트 만들기 (V+1)개: 0번 인덱스는 사용X
+# adjM=[[0]*(V+1) for _ in range(V+1)]
+#
+# # adjL=[[]for _ in range(V+1)]
+# # 연결된 길이 개수(E)만큼 for문 실행
+# for i in range(E):
+#
+#     v1,v2=arr[i*2],arr[i*2+1]
+#     adjM[v1][v2]=1
+#     adjM[v2][v1]=1
+#     # adjL[v1].append(v2)
+#     # adjL[v2].append(v1)
+# print(adjM)
 
 
 
 #######   stack2        ###############################
 
-print(print('''
+'''
 계산기1
 문자열로 된 계산식이 주어질 때, 스택을 이용하여 이계산식의 값응 계산할 수 있다.
 문자열 수식계산의 일반적 방법
@@ -273,3 +273,193 @@ def checknode(v):
             # 가지확인
                 checknode(u)
 '''
+'''
+백트래킹을 이영한 부분집합 구하기
+어떤 집합의 골집합과 자기자신을 포합한 모든 부분집합을 powerset이라하고
+구하려는 집합의 원소가 n개일 경우 부분집합의 개수는 2**n이다.
+-각원소가 부분집합에 포함되었는지 loop를 이용하여 확인하고 
+부분집합을 생성하는 방법
+bit=[0,0,0,0]
+for i in range(2):
+    bit[0]=i
+    for j in range(2):
+        bit[1]=j
+        for k in range(2):
+            bit[2]=k
+            for l in range(2):
+                bit[3]=l
+                print(bit)
+                
+-powerset(부분집합)을 구하는 백트래킹 알고리즘
+def backtrack(a,k,input):
+    global MAXCANDIDATES
+    c = [0]*MAXCANDIDATES
+    
+    if  k== input:
+        process_solution(a,k)
+    else:
+        k+=1
+        ncandidates = construct_candidates(a,k,input,c)
+        for i in range(ncandidates):
+            a[k] = c[i]
+            backtrack(a,k,input)
+
+def construct_candidates(a,k,input,c):
+    c[0] = True
+    c[1] = False
+    return 2
+    
+MAXCANDIDATES = 2
+NMAX=4
+a = [0]*NMAX
+backtrack(a,0,3)
+
+--{1,2,3}을 포함하는 모든 순열을 생성하는 함수
+for i1 in range(1,4):
+    for i2 in range(1,4):
+        if i2!=i1:
+        for i3 in range(1,4):
+            if i3!=i1 and i3!=i2:
+                print(i1,i2,i3)
+
+
+- 백트래킹으로 순열 구하기
+def backtrack(a,k,input):
+    global MAXCANDIDATES
+    c = [0]*MAXCANDIDATES
+    
+    if  k== input:
+        for i in range(1,k+1):
+            print(a[i],end=' ') 
+        print()
+    else:
+        k+=1
+        ncandidates = construct_candidates(a,k,input,c)
+        for i in range(ncandidates):
+            a[k] = c[i]
+            backtrack(a,k,input)
+
+def construct_candidates(a,k,input,c):
+    in_perm = [False]*NMAX
+    
+    for i in range(1,k+1):
+        in_perm[a[i]] =True
+        
+    ncandidates=0
+    for i in range(1,input+1):
+        if in_perm[i] == False:
+            c[candidates] = i
+            ncandidates=1
+    return ncandidates
+
+MAXCANDIDATES = 10
+NMAX=11
+a = [0]*NMAX
+backtrack(a,0,3)
+'''
+# # # 부분집합
+# def f(i,k):
+#     if i==k:
+#         #s=0
+#         for j in range(k):
+#             if bit[j]:
+#                 print(A[j], end=' ')
+#             #print()
+#             # 합구하기
+#             #     s+= A[j]
+#         print(bit)
+#     #print(bit,s)
+#     else:
+#         bit[i]=1
+#         f(i+1,k)
+#         bit[i]=0
+#         f(i + 1, k)
+#
+# A=[1,2,3]
+# N=len(A)
+# bit=[0]*N
+# f(0,N) #(인덱스,배열의 크기)
+# #
+# # '''
+# # 1 2 3 [1, 1, 1]
+# # 1 2 [1, 1, 0]
+# # 1 3 [1, 0, 1]
+# # 1 [1, 0, 0]
+# # 2 3 [0, 1, 1]
+# # 2 [0, 1, 0]
+# # 3 [0, 0, 1]
+# # [0, 0, 0]
+# # '''
+# # 합이 key인 집합의 개수세기
+# # i: 원소, k:집합의 크기, s: i-1까지의 합 t:목표값
+# def f(i,k,s,t):
+#     global cnt
+#     # 합이 이미 key를 넘은 경우 가지치기(백트래킹)
+#     if s>t:
+#         return
+#     elif s==t:
+#         cnt+=1
+#         return
+#     if i==k:
+#         if s==t:
+#             cnt+=1
+#         return
+#     else:
+#         f(i+1,k,s+A[i],t)
+#         f(i+1,k,s,t)
+#
+# A=[1,2,3,4,5,6,7,8,9,10]
+# N=len(A)
+# key=10
+# cnt=0
+# f(0,N,0,key)
+# print(cnt)
+#
+#
+# #순열
+# def f(i,k):
+#     if i==k:
+#         print(p)
+#     else:
+#         for j in range(i,k):
+#             p[i],p[j]=p[j],p[i]
+#             f(i+1,k)
+#             p[i], p[j] = p[j], p[i]
+#
+# p=[1,2,3]
+# N=len(p)
+# f(0,N)
+
+'''
+분할정복 알고리즘-나폴레옹이 사용한 전략
+분할: 해결할 문제를 여러개의 작은 부분으로 나눔
+정복: 나눈 문제를 각각 해결
+통합: (필요시)해결된 해답모으기
+O(log2n)
+'''
+# # 거듭제곱
+# def Power(Base,Exponent):
+#     if Exponent ==0 or Base==0:
+#         return 1
+#     if Exponent % 2 ==0:
+#         NewBase = Power(Base, Exponent/2)
+#         return NewBase *NewBase
+#     else:
+#         NewBase = Power(Base, (Exponent-1)/2)
+#         return (NewBase * NewBase)*Base
+'''
+퀵정렬
+주어진 배열을 두개로 분할하고 각각을 정렬한다.
+기준 아이템(pivot)을 중심으로 이보다 작은 것은 왼쪽, 큰 것은 오른쪽
+합병벙렬은 정렬이후 '합병'이라는 후처리가 필요하나 퀵정렬은 필요 없음
+-피봇으로 원소 하나를 선택, 피봇의 왼쪽에는 작은것 오른 쪽에는 큰 것 두기
+비교하면서 서로 바꿔줌, 만약 왼쪽에 더 작은 원소가 없다면 피봇과 비교 대상을 바꿔준다. 
+만약 왼쪽이나 오른쪽이 서로 정렬이 안되었다면 그부분만으로 새로운 피봇을 만들어 정렬
+최악의 시간복잡도: O(n**2),  보통 nlogn
+'''
+# def quickSort(a, begin, end):
+#     if begin < end:
+#         p = partition(a, begin, end)
+#         quickSort(a,begin,p-1)
+#         quickSort(a,p+1,end)
+
